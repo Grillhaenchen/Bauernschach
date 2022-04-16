@@ -24,7 +24,6 @@ public class ChessBoard {
         }
     }
 
-
     public void CreateGameField() {
         Insets buttonMargin = new Insets(0, 0, 0, 0);
 
@@ -45,9 +44,6 @@ public class ChessBoard {
             }
         }
 
-        /*
-         * fill the chess board
-         */
         chessBoard.add(new JLabel(""));
         // fill the top row
         for (int ii = 0; ii < 8; ii++) {
@@ -64,8 +60,6 @@ public class ChessBoard {
                 }
             }
         }
-
-
     }
 
     public JPanel CreateChessBoard() {
@@ -99,8 +93,6 @@ public class ChessBoard {
         boardConstrain.setBackground(ochre);
         CreateGameField();
         boardConstrain.add(chessBoard);
-
-
         return boardConstrain;
     }
 }

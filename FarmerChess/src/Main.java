@@ -13,9 +13,9 @@ public class Main {
         win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         win.setPreferredSize(new Dimension(400,300));
 
-        ChessBoard chessBorad =new ChessBoard();
+        IGame game =new ChessGame();
 
-        win.add(chessBorad.CreateChessBoard());
+        win.add(game.GetGameBoard());
 
         win.pack();
         win.setVisible(true);

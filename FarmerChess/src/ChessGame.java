@@ -1,22 +1,20 @@
 import Infrasructure.BlackFarmer;
-import Infrasructure.Cell;
 import Infrasructure.WhiteFarmer;
 
+import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Collection;
 
 
-public class Game implements IGame{
+public class ChessGame implements IGame{
 
     ArrayList<WhiteFarmer> WhiteFarmers;
     ArrayList<BlackFarmer> BlackFarmers;
-    ArrayList<Cell>Cessfield;
-    public Game() {
+
+    public ChessGame() {
         Setup();
     }
 
     private void Setup() {
-        Cessfield=new ArrayList<Cell>();
         WhiteFarmers=new ArrayList<WhiteFarmer>();
         BlackFarmers=new ArrayList<BlackFarmer>();
 
@@ -24,9 +22,11 @@ public class Game implements IGame{
             WhiteFarmers.add(new WhiteFarmer());
             BlackFarmers.add(new BlackFarmer());
         }
+    }
 
-
-
+    public JPanel GetGameBoard() {
+        ChessBoard board= new ChessBoard();
+       return board.CreateChessBoard();
     }
 
     public void newGame() {
