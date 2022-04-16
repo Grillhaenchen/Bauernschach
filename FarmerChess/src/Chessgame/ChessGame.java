@@ -18,7 +18,7 @@ public class ChessGame implements IGame {
         DrawChessBoard();
         PlayerOneOnTurn = true;
         firstTurn = true;
-        Start();
+
     }
 
     private void Start(){
