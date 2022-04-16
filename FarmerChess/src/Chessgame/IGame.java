@@ -4,10 +4,12 @@ import javax.swing.*;
 
 public interface IGame {
     void newGame();
-    void Move();
+    String[][] Move();
     String GetWinner();
     String GameOver();
     String NextGamer();
+
+    String[][] DrawChessBoard();
 
 
 }

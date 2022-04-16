@@ -1,5 +1,8 @@
 package GUI;
 
+import Chessgame.ChessGame;
+import Chessgame.IGame;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -10,7 +13,10 @@ public class Window extends JFrame {
     public Window(){
         super("ChessGame");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.add(new ChessField(),BorderLayout.SOUTH);
+
+        IGame game=new ChessGame();
+
+        this.add(new ChessField(game.DrawChessBoard()),BorderLayout.SOUTH);
 
         this.add(CreateButtons());
 

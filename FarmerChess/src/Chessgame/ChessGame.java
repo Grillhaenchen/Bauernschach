@@ -30,7 +30,7 @@ public class ChessGame implements IGame {
     public void newGame() {
     }
 
-    public void Move() {
+    public String[][] Move() {
 
         Scanner scanner = new Scanner(System.in);
         int IndexOfArrayList;
@@ -88,6 +88,30 @@ public class ChessGame implements IGame {
 
             DrawChessBoard();
         }
+
+
+        return initArray(BlackFramers, WhiteFarmers);
+    }
+
+    private String[][] initArray(ArrayList<BlackFarmer> _blackFarmers, ArrayList<WhiteFarmer> _whiteFarmers){
+        String[][] DrawArray=new String[8][8];
+
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (WhiteFarmers.get(j).getPosition().getX() == j && WhiteFarmers.get(j).getPosition().getY() == i) {
+                    System.out.print(" X ");
+                    DrawArray[i][j] = "O";
+                } else if (BlackFramers.get(j).getPosition().getX() == j && BlackFramers.get(j).getPosition().getY() == i) {
+                    System.out.print(" O ");
+                    DrawArray[i][j] = "X";
+                } else {
+                    System.out.print(" # ");
+                    DrawArray[i][j] = " ";
+                }
+            }
+        }
+        return DrawArray;
     }
 
     private boolean CollisionDetected(int indexOfArrayList, boolean firstTurnConfirmed, boolean playerOneOnTurn) {
@@ -129,7 +153,7 @@ public class ChessGame implements IGame {
         }
     }
 
-    private void DrawChessBoard() {
+    public  String[][] DrawChessBoard() {
 
         System.out.println(" 0  1  2  3  4  5  6  7");
         System.out.println("------------------------");
@@ -145,6 +169,7 @@ public class ChessGame implements IGame {
             }
             System.out.println();
         }
+return initArray(BlackFramers,WhiteFarmers);
     }
 
 }
