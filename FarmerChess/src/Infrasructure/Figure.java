@@ -1,4 +1,12 @@
 package Infrasructure;
 
-public class Figure {
+public abstract class Figure {
+
+FarmerColor farmerColor;
+
+
+
+
+
+
 }
