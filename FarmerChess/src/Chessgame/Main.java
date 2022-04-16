@@ -1,5 +1,4 @@
-import Infrasructure.Cell;
-import Infrasructure.CellColor;
+package Chessgame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,8 +13,6 @@ public class Main {
         win.setPreferredSize(new Dimension(400,300));
 
         IGame game =new ChessGame();
-
-        win.add(game.GetGameBoard());
 
         win.pack();
         win.setVisible(true);
