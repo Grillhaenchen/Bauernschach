@@ -141,7 +141,11 @@ public class ChessGame implements IGame {
     }
 
     public String NextGamer() {
-        return null;
+       if (PlayerOneOnTurn){
+           return "Spieler 1";
+       }
+       else
+           return "Spieler 2";
     }
 
     private void initLists() {

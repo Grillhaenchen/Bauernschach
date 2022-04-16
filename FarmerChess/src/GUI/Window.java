@@ -8,18 +8,18 @@ import java.awt.*;
 
 public class Window extends JFrame {
 
-
-
+    static JLabel PlayerInTurn;
+    private IGame game;
     public Window(){
         super("ChessGame");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        IGame game=new ChessGame();
+        game=new ChessGame();
 
         this.add(new ChessField(game.DrawChessBoard()),BorderLayout.SOUTH);
-
-        this.add(CreateButtons());
-
+        initGUI_Elements();
+        this.add(CreateButtons(),BorderLayout.EAST);
+        this.add(PlayerInTurn,BorderLayout.WEST);
         this.pack();
         this.setVisible(true);
     }
@@ -32,5 +32,11 @@ public class Window extends JFrame {
         buttonPanel.add(NewGame);
         //this.add(buttonPanel,BorderLayout.SOUTH);
         return buttonPanel;
+    }
+
+    void initGUI_Elements()
+    {
+        PlayerInTurn=new JLabel();
+        PlayerInTurn.setText("Spieler an der Reihe: "+game.NextGamer());
     }
 }
