@@ -98,10 +98,10 @@ public class ChessField extends JPanel {
                             PositionTurn=null;
                         }
                         else {
-                            JOptionPane.showMessageDialog(null, "Schachzug ausgeführt", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
                             DrawArray= game.Move(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()));
                             PositionFromChessFigure=null;
                             PositionTurn=null;
+                            JOptionPane.showMessageDialog(null, "Schachzug ausgeführt", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
                             ReDrawChessBoard();
                         }
                     }
@@ -137,7 +137,7 @@ public class ChessField extends JPanel {
         Position NewPosition = new Position(_turnArray[1][0], _turnArray[1][1]);
 
         if (_nextGamer == "Spieler 1") {
-            System.out.print("Spieler 1: " + (OldPosition.getY() - NewPosition.getY()));
+            System.out.println("Spieler 1: " + (OldPosition.getY() - NewPosition.getY()));
             if (_firstTurn == true) {
                 return OldPosition.getY() - NewPosition.getY() <= 2;
             } else {
@@ -145,7 +145,7 @@ public class ChessField extends JPanel {
             }
         } else if (_nextGamer == "Spieler 2") {
             if (_firstTurn == true) {
-                System.out.print("Spieler 2 " + (OldPosition.getY() - NewPosition.getY()));
+                System.out.println("Spieler 2 " + (OldPosition.getY() - NewPosition.getY()));
                 return OldPosition.getY() - NewPosition.getY() <= 2;
             } else {
                 return OldPosition.getY() - NewPosition.getY() == 1;

@@ -54,12 +54,12 @@ public class ChessGame implements IGame {
             }
 
             if (FirstTurnConfirmed) {
-                WhiteFarmers.get(OldPosition.getY()-1).getPosition().setY(WhiteFarmers.get(OldPosition.getY()-1).getPosition().getY() + 2);
+                WhiteFarmers.get(OldPosition.getX()-1).getPosition().setY(WhiteFarmers.get(OldPosition.getX()-1).getPosition().getY() + 2);
             } else {
-                WhiteFarmers.get(OldPosition.getY()-1).getPosition().setY(WhiteFarmers.get(OldPosition.getY()-1).getPosition().getY() + 1);
+                WhiteFarmers.get(OldPosition.getX()-1).getPosition().setY(WhiteFarmers.get(OldPosition.getX()-1).getPosition().getY() + 1);
             }
             System.out.println("Zug ausgeführt");
-            DrawChessBoard();
+            //DrawChessBoard();
         }
 
         else {
@@ -72,12 +72,12 @@ public class ChessGame implements IGame {
             }
 
             if (FirstTurnConfirmed) {
-                BlackFramers.get(OldPosition.getY()-1).getPosition().setY(BlackFramers.get(OldPosition.getY()-1).getPosition().getY() - 2);
+                BlackFramers.get(OldPosition.getX()-1).getPosition().setY(BlackFramers.get(OldPosition.getX()-1).getPosition().getY() - 2);
             } else {
-                BlackFramers.get(OldPosition.getY()-1).getPosition().setY(BlackFramers.get(OldPosition.getY()-1).getPosition().getY() - 1);
+                BlackFramers.get(OldPosition.getX()-1).getPosition().setY(BlackFramers.get(OldPosition.getX()-1).getPosition().getY() - 1);
             }
             System.out.println("Zug ausgeführt");
-            DrawChessBoard();
+            //DrawChessBoard();
         }
 
         return initArray(BlackFramers, WhiteFarmers);
