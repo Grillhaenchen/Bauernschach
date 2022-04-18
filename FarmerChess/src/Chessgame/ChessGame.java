@@ -1,6 +1,7 @@
 package Chessgame;
 
 import Infrastructure.BlackFarmer;
+import Infrastructure.Position;
 import Infrastructure.WhiteFarmer;
 
 import java.util.ArrayList;
@@ -29,6 +30,62 @@ public class ChessGame implements IGame {
 
     public void newGame() {
     }
+
+    @Override
+    public String[][] Move(int[][] _FígureTurn) {
+        //_FígureTurn[0][0]  <--old column
+        //_FígureTurn[0][1]  <--old row
+
+        //_FígureTurn[1][0]  <--new column
+        //_FígureTurn[1][1]  <--new row
+
+        Position OldPosition = new Position(_FígureTurn[0][0], _FígureTurn[0][1]);
+        Position NewPosition = new Position(_FígureTurn[1][0], _FígureTurn[1][1]);
+
+        FirstTurnConfirmed = false;
+
+        if (PlayerOneOnTurn) {
+            PlayerOneOnTurn = false;
+
+            if (firstTurn == true&& OldPosition.getY() - NewPosition.getY() == 2) {
+                FirstTurnConfirmed=true;
+            } else {
+                FirstTurnConfirmed = false;
+            }
+
+            if (FirstTurnConfirmed) {
+                WhiteFarmers.get(OldPosition.getY()-1).getPosition().setY(WhiteFarmers.get(OldPosition.getY()-1).getPosition().getY() + 2);
+            } else {
+                WhiteFarmers.get(OldPosition.getY()-1).getPosition().setY(WhiteFarmers.get(OldPosition.getY()-1).getPosition().getY() + 1);
+            }
+
+            System.out.println("Zug ausgeführt");
+
+            DrawChessBoard();
+        }
+
+        else {
+            PlayerOneOnTurn = true;
+
+            if (firstTurn == true&& OldPosition.getY() - NewPosition.getY() == 2) {
+                FirstTurnConfirmed=true;
+            } else {
+                FirstTurnConfirmed = false;
+            }
+
+
+            if (FirstTurnConfirmed) {
+                BlackFramers.get(OldPosition.getY()-1).getPosition().setY(BlackFramers.get(OldPosition.getY()-1).getPosition().getY() - 2);
+            } else {
+                BlackFramers.get(OldPosition.getY()-1).getPosition().setY(BlackFramers.get(OldPosition.getY()-1).getPosition().getY() - 1);
+            }
+            System.out.println("Zug ausgeführt");
+            DrawChessBoard();
+        }
+
+        return initArray(BlackFramers, WhiteFarmers);
+    }
+
     boolean FirstTurnConfirmed = false;
     public String[][] Move() {
 
@@ -101,10 +158,10 @@ public class ChessGame implements IGame {
             for (int j = 0; j < 8; j++) {
                 if (WhiteFarmers.get(j).getPosition().getX() == j && WhiteFarmers.get(j).getPosition().getY() == i) {
                     System.out.print(" X ");
-                    DrawArray[i][j] = "O";
+                    DrawArray[i][j] = "X";
                 } else if (BlackFramers.get(j).getPosition().getX() == j && BlackFramers.get(j).getPosition().getY() == i) {
                     System.out.print(" O ");
-                    DrawArray[i][j] = "X";
+                    DrawArray[i][j] = "O";
                 } else {
                     System.out.print(" # ");
                     DrawArray[i][j] = " ";
@@ -178,7 +235,7 @@ public class ChessGame implements IGame {
             }
             System.out.println();
         }
-return initArray(BlackFramers,WhiteFarmers);
+        return initArray(BlackFramers,WhiteFarmers);
     }
 
 

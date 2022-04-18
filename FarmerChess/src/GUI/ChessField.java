@@ -84,11 +84,9 @@ public class ChessField extends JPanel {
                     }
 
                     if (PositionTurn != null && PositionFromChessFigure != null) {
-                        boolean IsMouseInputValid = false;
 
                         //CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY());
                         //boolean b = TurnIsValid(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()), game.GetFirstTurn(), game.NextGamer());
-//
                         //System.out.println("turn is valid: " + b);
                         //b=CheckIfOnOldPositionFigure(CalcColumn(PositionFromChessFigure.getX())-1, CalcRow(PositionFromChessFigure.getY())-1, game.NextGamer());
                         //System.out.println("Is figure on Position " + b);
@@ -101,14 +99,12 @@ public class ChessField extends JPanel {
                         }
                         else {
                             JOptionPane.showMessageDialog(null, "Schachzug ausgeführt", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
-
+                            DrawArray= game.Move(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()));
+                            PositionFromChessFigure=null;
+                            PositionTurn=null;
+                            ReDrawChessBoard();
                         }
-
-
-                        // game.Move();
                     }
-
-
                 }
             }
         });
@@ -169,6 +165,11 @@ public class ChessField extends JPanel {
             return DrawArray[_y][_x] == "O";
         }
         return false;
+    }
+
+
+    private void ReDrawChessBoard(){
+        this.repaint();
     }
 
 }
