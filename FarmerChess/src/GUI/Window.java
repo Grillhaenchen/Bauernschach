@@ -14,9 +14,7 @@ public class Window extends JFrame{
     private IGame game;
     private ChessField PlayField;
 
-    private int HeightOfFrame=0;
 
-    private int WidthOfFrame=0;
 
     public Window(){
         super("ChessGame");
@@ -27,14 +25,13 @@ public class Window extends JFrame{
         PlayField=new ChessField(game.DrawChessBoard());
         this.add(PlayField,BorderLayout.SOUTH);
         initGUI_Elements();
-        initMouseActions();
+        //initMouseActions();
         this.add(CreateButtons(),BorderLayout.EAST);
         this.add(PlayerInTurn,BorderLayout.WEST);
         this.pack();
         this.setVisible(true);
 
-        this.HeightOfFrame=this.getHeight();
-        this.WidthOfFrame=this.getWidth();
+        PlayField.SetHeightAndWidth(PlayField.getHeight(),PlayField.getWidth());
     }
 
     private JPanel CreateButtons()
@@ -54,18 +51,23 @@ public class Window extends JFrame{
     }
 
     private void initMouseActions(){
+
         this.addMouseListener(new MouseAdapter() {
             @Override //I override only one method for presentation
             public void mousePressed(MouseEvent e) {
 
+                if (PlayField.getVerifyInputWhenFocusTarget()){
+                    return;
+                }
+                else {
 
+                    System.out.println(e.getX() + "," + e.getY());
+                    System.out.println("---is in playfield--");
+                    int[][]paylerturn=CalcPlayerturn(e.getX(),e.getY(),PlayField.GetSquarelength());
+                    //game.Move();
 
-                System.out.println(e.getX() + "," + e.getY());
-
-                int[][]paylerturn=CalcPlayerturn(e.getX(),e.getY(),PlayField.GetSquarelength());
-                game.Move();
-
-                ChessFieldAfterTurn();
+                    ChessFieldAfterTurn();
+                }
             }
         });
     }

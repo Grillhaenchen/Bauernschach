@@ -1,36 +1,22 @@
 package GUI;
 
-import Infrastructure.BlackFarmer;
-import Infrastructure.WhiteFarmer;
-
 import javax.swing.*;
 import java.awt.*;
-import java.sql.Array;
-import java.util.ArrayList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ChessField extends JPanel {
 
-    private String DrawArray[][]= new String[7][7];
+    final int SQUARESIZE = 8;
+    private String[][] DrawArray = new String[7][7];
+    private int HeightOfFrame = 0;
+    private int WidthOfFrame = 0;
+    private int Squarelength = 0;
 
-    public ChessField(String[][] _DrawArray){
+    public ChessField(String[][] _DrawArray) {
         super();
-        DrawArray=_DrawArray;
-    }
-
-    private void initArray(ArrayList<BlackFarmer> _blackFarmers, ArrayList<WhiteFarmer> _whiteFarmers){
-        for (int i=0;i<8;i++)
-        {
-            for (int j=0;j<8;j++){
-                if (_blackFarmers.get(i).getPosition().getY()==j){
-                    DrawArray[i][j]= "O";
-                }
-                else if (_whiteFarmers.get(i).getPosition().getY()==j){
-                    DrawArray[i][j]= "X";
-                }
-                else
-                    DrawArray[i][j]= " ";
-            }
-        }
+        DrawArray = _DrawArray;
+        initMouseActions();
     }
 
     @Override
@@ -38,10 +24,13 @@ public class ChessField extends JPanel {
         return new Dimension(200, 200);
     }
 
-    private int Squarelength=0;
+    public int GetSquarelength() {
+        return Squarelength;
+    }
 
-    public int GetSquarelength(){
-    return Squarelength;
+    public void SetHeightAndWidth(int _height, int _width) {
+        HeightOfFrame = _height;
+        WidthOfFrame = _width;
     }
 
     protected void paintComponent(Graphics g) {
@@ -49,9 +38,7 @@ public class ChessField extends JPanel {
 
         Graphics2D g2d = (Graphics2D) g.create();
 
-        final int SQUARESIZE=8;
-
-         Squarelength = Math.min(getWidth() - 4, getHeight() - 4) / SQUARESIZE;
+        Squarelength = Math.min(getWidth() - 4, getHeight() - 4) / SQUARESIZE;
 
         int width = getWidth() - (Squarelength * 2);
         int height = getHeight() - (Squarelength * 2);
@@ -63,7 +50,7 @@ public class ChessField extends JPanel {
 
             for (int vert = 0; vert < SQUARESIZE; vert++) {
                 g.drawRect(x, y, Squarelength, Squarelength);
-                g.drawString(DrawArray[horz][vert],x+10,y+18);
+                g.drawString(DrawArray[horz][vert], x + 10, y + 18);
 
                 x += Squarelength;
             }
@@ -72,4 +59,26 @@ public class ChessField extends JPanel {
         }
         g2d.dispose();
     }
+
+
+    private void initMouseActions() {
+        this.addMouseListener(new MouseAdapter() {
+            @Override //I override only one method for presentation
+            public void mousePressed(MouseEvent e) {
+
+                if ((HeightOfFrame / 2) - ((SQUARESIZE * Squarelength) / 2) < e.getY() && (HeightOfFrame / 2) + ((SQUARESIZE * Squarelength) / 2) > e.getY() &&(WidthOfFrame / 2) - ((SQUARESIZE * Squarelength) / 2) < e.getX() && (WidthOfFrame / 2) + ((SQUARESIZE * Squarelength) / 2) > e.getX()) {
+                    System.out.println(e.getY() + " is in ChessField");
+                }
+
+                /*if ((HeightOfFrame/2)+((SQUARESIZE*Squarelength)/2)>e.getY()){
+                    System.out.println(e.getY()+" is in ChessField lower");
+                }
+*/
+                System.out.println(/*e.getX() + "," +*/ e.getY());
+
+
+            }
+        });
+    }
+
 }
