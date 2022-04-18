@@ -15,6 +15,8 @@ public class ChessField extends JPanel {
     private int HeightOfFrame = 0;
     private int WidthOfFrame = 0;
     private int Squarelength = 0;
+    private Position PositionFromChessFigure;
+    private Position PositionTurn;
 
     public ChessField(String[][] _DrawArray, IGame game) {
         super();
@@ -63,63 +65,120 @@ public class ChessField extends JPanel {
         g2d.dispose();
     }
 
-    private Position PositionFromChessFigure;
-    private Position PositionTurn;
-
     private void initMouseActions(IGame game) {
         this.addMouseListener(new MouseAdapter() {
             @Override //I override only one method for presentation
             public void mousePressed(MouseEvent e) {
 
-                if ((HeightOfFrame / 2) - ((SQUARESIZE * Squarelength) / 2) < e.getY() && (HeightOfFrame / 2) + ((SQUARESIZE * Squarelength) / 2) > e.getY() &&(WidthOfFrame / 2) - ((SQUARESIZE * Squarelength) / 2) < e.getX() && (WidthOfFrame / 2) + ((SQUARESIZE * Squarelength) / 2) > e.getX()) {
-                    System.out.println(e.getY() + " is in ChessField");
-                    if (PositionFromChessFigure==null){
-                        PositionFromChessFigure=new Position(e.getX(),e.getY());
-                    }
-                    else {
-                        PositionTurn=new Position(e.getX(),e.getY());
+                if ((HeightOfFrame / 2) - ((SQUARESIZE * Squarelength) / 2) < e.getY() && (HeightOfFrame / 2) + ((SQUARESIZE * Squarelength) / 2) > e.getY() && (WidthOfFrame / 2) - ((SQUARESIZE * Squarelength) / 2) < e.getX() && (WidthOfFrame / 2) + ((SQUARESIZE * Squarelength) / 2) > e.getX()) {
+
+                    System.out.println("##############################");
+                    System.out.println("Spalte: " + CalcColumn(e.getX()));
+                    System.out.println("Zeile: " + CalcRow(e.getY()));
+                    System.out.println("##############################");
+
+                    if (PositionFromChessFigure == null) {
+                        PositionFromChessFigure = new Position(e.getX(), e.getY());
+                    } else {
+                        PositionTurn = new Position(e.getX(), e.getY());
                     }
 
-                    if (PositionTurn!=null&&PositionFromChessFigure!=null){
-                        //CalcPlayerturn(PositionFromChessFigure.getX(),PositionTurn.getX(),PositionFromChessFigure.getY(),PositionTurn.getY());
+                    if (PositionTurn != null && PositionFromChessFigure != null) {
+                        //CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY());
+                        boolean b=   TurnIsValid(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()),game.GetFirstTurn(), game.NextGamer());
 
-                       // game.Move();
+                        System.out.println("turn is valid: "+b);
+                        //while (false==TurnIsValid(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()),game.GetFirstTurn(), game.NextGamer()));
+                        //{
+                        //    JOptionPane.showMessageDialog(null, "Schachzug nicht valide", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+                        //}
+
+
+                        // game.Move();
                     }
-                    CalcPlayerturn(e.getX(),PositionTurn.getX(),e.getY(),PositionTurn.getY());
+
+
                 }
             }
         });
     }
-    private int[][] CalcPlayerturn(int _currentX, int _turnX, int _currentY,int _turnY){
 
-        int [][]Turn=new int[2][2];
+    private int[][] CalcPlayerturn(int _currentX, int _turnX, int _currentY, int _turnY) {
 
-        //Turn[0][0]=CalcColumn(_currentX);//old column
-        //Turn[0][0]=CalcRow(_currentY);//old row
+        int[][] Turn = new int[2][2];
 
-        System.out.println("Current Column: "+CalcColumn(_currentX));
-        System.out.println("Current Row: "+CalcRow(_currentY));
+        Turn[0][0] = CalcColumn(_currentX);//old column
+        Turn[0][1] = CalcRow(_currentY);//old row
 
-
-
-
-        return null;
+        Turn[1][0] = CalcColumn(_turnX);//old column
+        Turn[1][1] = CalcRow(_turnY);//old row
+        return Turn;
     }
 
-    private int CalcColumn(int _X){
-
-        double offset=(WidthOfFrame / 2) - ((SQUARESIZE * Squarelength) / 2);
-        return (int)Math.ceil((_X-offset)/Squarelength);
+    private int CalcColumn(int _X) {
+        double offset = (WidthOfFrame / 2) - ((SQUARESIZE * Squarelength) / 2);
+        return (int) Math.ceil((_X - offset) / Squarelength);
     }
 
-    private int CalcRow(int _Y){
-        double offset=(HeightOfFrame / 2) - ((SQUARESIZE * Squarelength) / 2);
-
-
-        return (int)Math.ceil((_Y-offset)/Squarelength);
+    private int CalcRow(int _Y) {
+        double offset = (HeightOfFrame / 2) - ((SQUARESIZE * Squarelength) / 2);
+        return (int) Math.ceil((_Y - offset) / Squarelength);
     }
 
+    private boolean TurnIsValid(int[][] _turnArray, boolean _firstTurn, String _nextGamer) {
+        Position OldPosition = new Position(_turnArray[0][0], _turnArray[0][1]);
+        Position NewPosition = new Position(_turnArray[1][0], _turnArray[1][1]);
 
+        if (_nextGamer == "Spieler 1") {
+            System.out.print("Spieler 1: "+(OldPosition.getY()- NewPosition.getY()));
+            if (_firstTurn == true)
+            {
+                if (OldPosition.getY()- NewPosition.getY()<=2) {
+                    return true;
+                }
 
+                else{
+                    return false;
+                }
+
+            }
+
+            else
+            {
+                if (OldPosition.getY()- NewPosition.getY()==1)
+                {
+                    return true;
+                }
+
+                else{
+                    return false;
+                }
+            }
+        }
+
+        else if (_nextGamer=="Spieler 2") {
+            if (_firstTurn == true) {
+                System.out.print("Spieler 2 "+(OldPosition.getY()- NewPosition.getY()));
+                if (OldPosition.getY()- NewPosition.getY()<=2) {
+                    return true;
+                }
+
+                else{
+                    return false;
+                }
+            }
+
+            else {
+                if (OldPosition.getY()- NewPosition.getY()==1) {
+                    return true;
+                }
+
+                else{
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
 
 }

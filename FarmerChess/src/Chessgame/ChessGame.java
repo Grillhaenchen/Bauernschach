@@ -29,12 +29,12 @@ public class ChessGame implements IGame {
 
     public void newGame() {
     }
-
+    boolean FirstTurnConfirmed = false;
     public String[][] Move() {
 
         Scanner scanner = new Scanner(System.in);
         int IndexOfArrayList;
-        boolean FirstTurnConfirmed = false;
+        FirstTurnConfirmed = false;
 
         if (PlayerOneOnTurn) {
             PlayerOneOnTurn = false;
@@ -146,6 +146,11 @@ public class ChessGame implements IGame {
        }
        else
            return "Spieler 2";
+    }
+
+    @Override
+    public boolean GetFirstTurn() {
+        return FirstTurnConfirmed;
     }
 
     private void initLists() {

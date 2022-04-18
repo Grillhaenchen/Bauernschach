@@ -9,6 +9,8 @@ public interface IGame {
     String GameOver();
     String NextGamer();
 
+    boolean GetFirstTurn();
+
     String[][] DrawChessBoard();
 
 }
