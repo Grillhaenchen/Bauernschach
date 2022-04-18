@@ -13,6 +13,7 @@ public class ChessGame implements IGame {
 
     boolean PlayerOneOnTurn;
     boolean firstTurn;
+    boolean FirstTurnConfirmed = false;
 
     public ChessGame() {
         initLists();
@@ -22,8 +23,8 @@ public class ChessGame implements IGame {
 
     }
 
-    private void Start(){
-        while (true){
+    private void Start() {
+        while (true) {
             Move();
         }
     }
@@ -45,53 +46,41 @@ public class ChessGame implements IGame {
         FirstTurnConfirmed = false;
 
         if (PlayerOneOnTurn) {
-            PlayerOneOnTurn = false;
 
-            if (firstTurn == true&& OldPosition.getY() - NewPosition.getY() == 2) {
-                FirstTurnConfirmed=true;
-            } else {
-                FirstTurnConfirmed = false;
-            }
+            FirstTurnConfirmed = firstTurn == true && OldPosition.getY() - NewPosition.getY() == 2;
 
             if (FirstTurnConfirmed) {
                 WhiteFarmers.get(GetIndexFromWhiteFarmer(OldPosition)).getPosition().setY(WhiteFarmers.get(GetIndexFromWhiteFarmer(OldPosition)).getPosition().getY() + 2);
             } else if (PlayerCanKillOther(NewPosition)) {
                 WhiteFarmers.get(GetIndexFromWhiteFarmer(OldPosition)).getPosition().setY(WhiteFarmers.get(GetIndexFromWhiteFarmer(OldPosition)).getPosition().getY() + 1);
-            }
-            else {
+                WhiteFarmers.get(GetIndexFromWhiteFarmer(OldPosition)).getPosition().setX(NewPosition.getX());
+                BlackFramers.set(GetIndexFromBlackFarmer(NewPosition), null);
+            } else {
                 WhiteFarmers.get(GetIndexFromWhiteFarmer(OldPosition)).getPosition().setY(WhiteFarmers.get(GetIndexFromWhiteFarmer(OldPosition)).getPosition().getY() + 1);
             }
             System.out.println("Zug ausgeführt");
+            PlayerOneOnTurn = false;
+        } else {
 
-        }
 
-        else {
-            PlayerOneOnTurn = true;
-
-            if (firstTurn == true&& OldPosition.getY() - NewPosition.getY() == 2) {
-                FirstTurnConfirmed=true;
-            }
-            else if (PlayerCanKillOther(NewPosition)) {
-
-            }
-            else
-            {
-                FirstTurnConfirmed = false;
-            }
+            FirstTurnConfirmed = firstTurn == true && OldPosition.getY() - NewPosition.getY() == 2;
 
             if (FirstTurnConfirmed) {
                 BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().setY(BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().getY() - 2);
+            } else if (PlayerCanKillOther(NewPosition)) {
+                BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().setY(BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().getY() + 1);
+                BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().setX(NewPosition.getX());
+                WhiteFarmers.set(GetIndexFromWhiteFarmer(NewPosition), null);
             } else {
                 BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().setY(BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().getY() - 1);
             }
             System.out.println("Zug ausgeführt");
-            //DrawChessBoard();
+            PlayerOneOnTurn = true;
         }
 
         return initArray(BlackFramers, WhiteFarmers);
     }
 
-    boolean FirstTurnConfirmed = false;
     public String[][] Move() {
 
         Scanner scanner = new Scanner(System.in);
@@ -155,8 +144,8 @@ public class ChessGame implements IGame {
         return initArray(BlackFramers, WhiteFarmers);
     }
 
-    private String[][] initArray(ArrayList<BlackFarmer> _blackFarmers, ArrayList<WhiteFarmer> _whiteFarmers){
-        String[][] DrawArray=new String[8][8];
+    private String[][] initArray(ArrayList<BlackFarmer> _blackFarmers, ArrayList<WhiteFarmer> _whiteFarmers) {
+        String[][] DrawArray = new String[8][8];
 
 
         for (int i = 0; i < 8; i++) {
@@ -203,11 +192,9 @@ public class ChessGame implements IGame {
     }
 
     public String NextGamer() {
-       if (PlayerOneOnTurn){
-           return "Spieler 1";
-       }
-       else
-           return "Spieler 2";
+        if (PlayerOneOnTurn) {
+            return "Spieler 1";
+        } else return "Spieler 2";
     }
 
     @Override
@@ -224,7 +211,7 @@ public class ChessGame implements IGame {
         }
     }
 
-    public  String[][] DrawChessBoard() {
+    public String[][] DrawChessBoard() {
 
         System.out.println(" 0  1  2  3  4  5  6  7");
         System.out.println("------------------------");
@@ -240,56 +227,48 @@ public class ChessGame implements IGame {
             }
             System.out.println();
         }
-        return initArray(BlackFramers,WhiteFarmers);
+        return initArray(BlackFramers, WhiteFarmers);
     }
 
-
-    public boolean PlayerCanKillOther(Position _newPosition){
-        if (PlayerOneOnTurn){
-            for (BlackFarmer Farmer:
-                 BlackFramers) {
-               if (_newPosition.getY()==Farmer.getPosition().getY()&&(_newPosition.getX()-Farmer.getPosition().getX()==-1||_newPosition.getX()-Farmer.getPosition().getX()==1)){
-                   return  true;
-               }
+    public boolean PlayerCanKillOther(Position _newPosition) {
+        if (PlayerOneOnTurn) {
+            for (BlackFarmer Farmer : BlackFramers) {
+                if ((_newPosition.getY() == Farmer.getPosition().getY() && (_newPosition.getX() - Farmer.getPosition().getX() == -1 || _newPosition.getX() - Farmer.getPosition().getX() == 1))) {
+                    return true;
+                }
             }
-        }
-
-        else {
-            for (WhiteFarmer Farmer :
-                    WhiteFarmers) {
-                if (_newPosition.getY()==Farmer.getPosition().getY()&&(_newPosition.getX()-Farmer.getPosition().getX()==-1||_newPosition.getX()-Farmer.getPosition().getX()==1)){
-                    return  true;
+        } else {
+            for (WhiteFarmer Farmer : WhiteFarmers) {
+                if (_newPosition.getY() == Farmer.getPosition().getY() && (_newPosition.getX() - Farmer.getPosition().getX() == -1 || _newPosition.getX() - Farmer.getPosition().getX() == 1)) {
+                    return true;
                 }
             }
         }
         return false;
     }
 
-    private int GetIndexFromBlackFarmer(Position _oldPosition)
-    {
-        int returnValue=100;
+    public int GetIndexFromBlackFarmer(Position _oldPosition) {
+        int returnValue = 100;
 
-        for (int i = 0; i<BlackFramers.toArray().length;i++ ){
+        for (int i = 0; i < BlackFramers.toArray().length; i++) {
 
-            if (BlackFramers.get(i).getPosition().getY()== _oldPosition.getY()-1&&BlackFramers.get(i).getPosition().getX()== _oldPosition.getX()-1){
-                returnValue=i;
+            if (BlackFramers.get(i).getPosition().getY() == _oldPosition.getY() - 1 && BlackFramers.get(i).getPosition().getX() == _oldPosition.getX() - 1) {
+                returnValue = i;
             }
         }
         return returnValue;
     }
 
-    private int GetIndexFromWhiteFarmer(Position _oldPosition)
-    {
-        int returnValue=100;
+    public int GetIndexFromWhiteFarmer(Position _oldPosition) {
+        int returnValue = 100;
 
-        for (int i = 0; i<WhiteFarmers.toArray().length;i++ ){
+        for (int i = 0; i < WhiteFarmers.toArray().length; i++) {
 
-            if (WhiteFarmers.get(i).getPosition().getY()== _oldPosition.getY()-1&&WhiteFarmers.get(i).getPosition().getX()== _oldPosition.getX()-1){
-                returnValue=i;
+            if (WhiteFarmers.get(i).getPosition().getY() == _oldPosition.getY() - 1 && WhiteFarmers.get(i).getPosition().getX() == _oldPosition.getX() - 1) {
+                returnValue = i;
             }
         }
         return returnValue;
     }
-
 
 }

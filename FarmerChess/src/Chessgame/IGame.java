@@ -1,5 +1,7 @@
 package Chessgame;
 
+import Infrastructure.Position;
+
 import javax.swing.*;
 
 public interface IGame {
@@ -14,4 +16,9 @@ public interface IGame {
 
     String[][] DrawChessBoard();
 
+
+
+    int GetIndexFromBlackFarmer(Position _oldPosition);
+    int GetIndexFromWhiteFarmer(Position _oldPosition);
+    boolean PlayerCanKillOther(Position _newPosition);
 }
