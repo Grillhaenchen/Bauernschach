@@ -67,7 +67,7 @@ public class ChessGame implements IGame {
                 BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().setY(BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().getY() - 2);
             } else if (PlayerCanKillOther(NewPosition)) {
                 BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition(). setY(BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().getY() -1);
-                BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().setX(NewPosition.getX());
+                BlackFramers.get(GetIndexFromWhiteFarmer(OldPosition)).getPosition().setX(NewPosition.getX());
                 WhiteFarmers.set(GetIndexFromWhiteFarmer(NewPosition), null);
             } else {
                 BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().setY(BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().getY() - 1);
@@ -230,14 +230,14 @@ public class ChessGame implements IGame {
 
     public boolean PlayerCanKillOther(Position _newPosition) {
         if (PlayerOneOnTurn) {
-            for (WhiteFarmer Farmer : WhiteFarmers) {
+            for (BlackFarmer Farmer : BlackFramers) {
                 if ((_newPosition.getY() == Farmer.getPosition().getY() && (_newPosition.getX() - Farmer.getPosition().getX() == -1 || _newPosition.getX() - Farmer.getPosition().getX() == 1))) {
                     return true;
                 }
             }
         } else {
-            for (BlackFarmer Farmer : BlackFramers) {
-                if (_newPosition.getY() == Farmer.getPosition().getY() && (_newPosition.getX() - Farmer.getPosition().getX() == -1 || _newPosition.getX() - Farmer.getPosition().getX() == 1)) {
+            for (WhiteFarmer Farmer : WhiteFarmers) {
+                if ((_newPosition.getY() == Farmer.getPosition().getY() && (_newPosition.getX() - Farmer.getPosition().getX() == 1 || _newPosition.getX() - Farmer.getPosition().getX() == -1))) {
                     return true;
                 }
             }
