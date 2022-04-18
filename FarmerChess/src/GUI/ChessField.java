@@ -85,25 +85,16 @@ public class ChessField extends JPanel {
 
                     if (PositionTurn != null && PositionFromChessFigure != null) {
 
-                       // if (game.NextGamer()=="Spieler 1")
-                       // {
-                       //     if (game.GetIndexFromBlackFarmer())
-                       // }
-//
-                       // else if (game.NextGamer()=="Spieler 2"){
-//
-                       // }
 
-                       // else
 
-                        if (TurnIsValid(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()), game.GetFirstTurn(), game.NextGamer()) == false
-                                && CheckIfOnOldPositionFigure(CalcColumn(PositionFromChessFigure.getX()) - 1, CalcRow(PositionFromChessFigure.getY()) - 1, game.NextGamer()) == false) {
+                        if (!TurnIsValid(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()), game.GetFirstTurn(), game.NextGamer())
+                                && !CheckIfOnOldPositionFigure(CalcColumn(PositionFromChessFigure.getX()) - 1, CalcRow(PositionFromChessFigure.getY()) - 1, game.NextGamer())) {
                             JOptionPane.showMessageDialog(null, "Schachzug nicht valide", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
                             PositionFromChessFigure=null;
                             PositionTurn=null;
-                        }
-                        //else
-                        else {
+                        } else if (game.PlayerCanKillOther(PositionTurn)) {
+                            
+                        } else {
                             DrawArray= game.Move(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()));
                             PositionFromChessFigure=null;
                             PositionTurn=null;
