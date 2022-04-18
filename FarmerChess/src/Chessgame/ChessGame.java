@@ -58,9 +58,7 @@ public class ChessGame implements IGame {
             } else {
                 WhiteFarmers.get(OldPosition.getY()-1).getPosition().setY(WhiteFarmers.get(OldPosition.getY()-1).getPosition().getY() + 1);
             }
-
             System.out.println("Zug ausgeführt");
-
             DrawChessBoard();
         }
 
@@ -72,7 +70,6 @@ public class ChessGame implements IGame {
             } else {
                 FirstTurnConfirmed = false;
             }
-
 
             if (FirstTurnConfirmed) {
                 BlackFramers.get(OldPosition.getY()-1).getPosition().setY(BlackFramers.get(OldPosition.getY()-1).getPosition().getY() - 2);
