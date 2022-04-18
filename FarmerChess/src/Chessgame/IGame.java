@@ -11,5 +11,4 @@ public interface IGame {
 
     String[][] DrawChessBoard();
 
-
 }

@@ -176,4 +176,5 @@ public class ChessGame implements IGame {
 return initArray(BlackFramers,WhiteFarmers);
     }
 
+
 }

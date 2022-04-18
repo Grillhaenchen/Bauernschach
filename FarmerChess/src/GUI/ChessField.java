@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ChessField extends JPanel {
 
-    String DrawArray[][]= new String[7][7];
+    private String DrawArray[][]= new String[7][7];
 
     public ChessField(String[][] _DrawArray){
         super();
@@ -38,6 +38,12 @@ public class ChessField extends JPanel {
         return new Dimension(200, 200);
     }
 
+    private int Squarelength=0;
+
+    public int GetSquarelength(){
+    return Squarelength;
+    }
+
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
@@ -45,23 +51,24 @@ public class ChessField extends JPanel {
 
         final int SQUARESIZE=8;
 
-        int size = Math.min(getWidth() - 4, getHeight() - 4) / SQUARESIZE;
-        int width = getWidth() - (size * 2);
-        int height = getHeight() - (size * 2);
+         Squarelength = Math.min(getWidth() - 4, getHeight() - 4) / SQUARESIZE;
 
-        int y = (getHeight() - (size * SQUARESIZE)) / 2;
+        int width = getWidth() - (Squarelength * 2);
+        int height = getHeight() - (Squarelength * 2);
+
+        int y = (getHeight() - (Squarelength * SQUARESIZE)) / 2;
         for (int horz = 0; horz < 8; horz++) {
 
-            int x = (getWidth() - (size * SQUARESIZE)) / 2;
+            int x = (getWidth() - (Squarelength * SQUARESIZE)) / 2;
 
             for (int vert = 0; vert < SQUARESIZE; vert++) {
-                g.drawRect(x, y, size, size);
+                g.drawRect(x, y, Squarelength, Squarelength);
                 g.drawString(DrawArray[horz][vert],x+10,y+18);
 
-                x += size;
+                x += Squarelength;
             }
 
-            y += size;
+            y += Squarelength;
         }
         g2d.dispose();
     }
