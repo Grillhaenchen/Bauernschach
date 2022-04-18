@@ -32,6 +32,14 @@ public class Window extends JFrame {
         this.setVisible(true);
 
         PlayField.SetHeightAndWidth(PlayField.getHeight(),PlayField.getWidth());
+        PlayField.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+
+                PlayerInTurn.setText("Spieler an der Reihe: "+game.NextGamer());
+
+            }
+        });
         this.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {

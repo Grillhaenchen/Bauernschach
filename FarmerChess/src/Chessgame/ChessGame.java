@@ -61,14 +61,12 @@ public class ChessGame implements IGame {
             System.out.println("Zug ausgeführt");
             PlayerOneOnTurn = false;
         } else {
-
-
             FirstTurnConfirmed = firstTurn == true && OldPosition.getY() - NewPosition.getY() == 2;
 
             if (FirstTurnConfirmed) {
                 BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().setY(BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().getY() - 2);
             } else if (PlayerCanKillOther(NewPosition)) {
-                BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().setY(BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().getY() + 1);
+                BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition(). setY(BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().getY() -1);
                 BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().setX(NewPosition.getX());
                 WhiteFarmers.set(GetIndexFromWhiteFarmer(NewPosition), null);
             } else {
@@ -232,13 +230,13 @@ public class ChessGame implements IGame {
 
     public boolean PlayerCanKillOther(Position _newPosition) {
         if (PlayerOneOnTurn) {
-            for (BlackFarmer Farmer : BlackFramers) {
+            for (WhiteFarmer Farmer : WhiteFarmers) {
                 if ((_newPosition.getY() == Farmer.getPosition().getY() && (_newPosition.getX() - Farmer.getPosition().getX() == -1 || _newPosition.getX() - Farmer.getPosition().getX() == 1))) {
                     return true;
                 }
             }
         } else {
-            for (WhiteFarmer Farmer : WhiteFarmers) {
+            for (BlackFarmer Farmer : BlackFramers) {
                 if (_newPosition.getY() == Farmer.getPosition().getY() && (_newPosition.getX() - Farmer.getPosition().getX() == -1 || _newPosition.getX() - Farmer.getPosition().getX() == 1)) {
                     return true;
                 }
@@ -252,7 +250,7 @@ public class ChessGame implements IGame {
 
         for (int i = 0; i < BlackFramers.toArray().length; i++) {
 
-            if (BlackFramers.get(i).getPosition().getY() == _oldPosition.getY() - 1 && BlackFramers.get(i).getPosition().getX() == _oldPosition.getX() - 1) {
+            if (BlackFramers.get(i).getPosition().getY() == _oldPosition.getY()-1  && BlackFramers.get(i).getPosition().getX() == _oldPosition.getX()-1 ) {
                 returnValue = i;
             }
         }

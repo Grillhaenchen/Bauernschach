@@ -84,21 +84,22 @@ public class ChessField extends JPanel {
                     }
 
                     if (PositionTurn != null && PositionFromChessFigure != null) {
-
-
-
                         if (!TurnIsValid(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()), game.GetFirstTurn(), game.NextGamer())
                                 && !CheckIfOnOldPositionFigure(CalcColumn(PositionFromChessFigure.getX()) - 1, CalcRow(PositionFromChessFigure.getY()) - 1, game.NextGamer())) {
                             JOptionPane.showMessageDialog(null, "Schachzug nicht valide", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
                             PositionFromChessFigure=null;
                             PositionTurn=null;
                         } else if (game.PlayerCanKillOther(PositionTurn)) {
-                            
+                            DrawArray= game.Move(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()));
+                            PositionFromChessFigure=null;
+                            PositionTurn=null;
+                            //JOptionPane.showMessageDialog(null, "Schachzug ausgeführt", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+                            ReDrawChessBoard();
                         } else {
                             DrawArray= game.Move(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()));
                             PositionFromChessFigure=null;
                             PositionTurn=null;
-                            JOptionPane.showMessageDialog(null, "Schachzug ausgeführt", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+                           // JOptionPane.showMessageDialog(null, "Schachzug ausgeführt", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
                             ReDrawChessBoard();
                         }
                     }
