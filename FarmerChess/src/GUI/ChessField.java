@@ -84,14 +84,25 @@ public class ChessField extends JPanel {
                     }
 
                     if (PositionTurn != null && PositionFromChessFigure != null) {
-                        //CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY());
-                        boolean b=   TurnIsValid(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()),game.GetFirstTurn(), game.NextGamer());
+                        boolean IsMouseInputValid = false;
 
-                        System.out.println("turn is valid: "+b);
-                        //while (false==TurnIsValid(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()),game.GetFirstTurn(), game.NextGamer()));
-                        //{
-                        //    JOptionPane.showMessageDialog(null, "Schachzug nicht valide", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
-                        //}
+                        //CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY());
+                        //boolean b = TurnIsValid(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()), game.GetFirstTurn(), game.NextGamer());
+//
+                        //System.out.println("turn is valid: " + b);
+                        //b=CheckIfOnOldPositionFigure(CalcColumn(PositionFromChessFigure.getX())-1, CalcRow(PositionFromChessFigure.getY())-1, game.NextGamer());
+                        //System.out.println("Is figure on Position " + b);
+
+                        if (TurnIsValid(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()), game.GetFirstTurn(), game.NextGamer()) == false
+                                && CheckIfOnOldPositionFigure(CalcColumn(PositionFromChessFigure.getX()) - 1, CalcRow(PositionFromChessFigure.getY()) - 1, game.NextGamer()) == false) {
+                            JOptionPane.showMessageDialog(null, "Schachzug nicht valide", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+                            PositionFromChessFigure=null;
+                            PositionTurn=null;
+                        }
+                        else {
+                            JOptionPane.showMessageDialog(null, "Schachzug ausgeführt", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+
+                        }
 
 
                         // game.Move();
@@ -130,53 +141,32 @@ public class ChessField extends JPanel {
         Position NewPosition = new Position(_turnArray[1][0], _turnArray[1][1]);
 
         if (_nextGamer == "Spieler 1") {
-            System.out.print("Spieler 1: "+(OldPosition.getY()- NewPosition.getY()));
-            if (_firstTurn == true)
-            {
-                if (OldPosition.getY()- NewPosition.getY()<=2) {
-                    return true;
-                }
-
-                else{
-                    return false;
-                }
-
+            System.out.print("Spieler 1: " + (OldPosition.getY() - NewPosition.getY()));
+            if (_firstTurn == true) {
+                return OldPosition.getY() - NewPosition.getY() <= 2;
+            } else {
+                return OldPosition.getY() - NewPosition.getY() == 1;
             }
-
-            else
-            {
-                if (OldPosition.getY()- NewPosition.getY()==1)
-                {
-                    return true;
-                }
-
-                else{
-                    return false;
-                }
+        } else if (_nextGamer == "Spieler 2") {
+            if (_firstTurn == true) {
+                System.out.print("Spieler 2 " + (OldPosition.getY() - NewPosition.getY()));
+                return OldPosition.getY() - NewPosition.getY() <= 2;
+            } else {
+                return OldPosition.getY() - NewPosition.getY() == 1;
             }
         }
+        return false;
+    }
 
-        else if (_nextGamer=="Spieler 2") {
-            if (_firstTurn == true) {
-                System.out.print("Spieler 2 "+(OldPosition.getY()- NewPosition.getY()));
-                if (OldPosition.getY()- NewPosition.getY()<=2) {
-                    return true;
-                }
+    private boolean CheckIfOnOldPositionFigure(int _x, int _y, String _nextGamer) {
+        if (_nextGamer == "Spieler 1") {
+            //_x=-7;
+            //_x=Math.abs(_x);
 
-                else{
-                    return false;
-                }
-            }
 
-            else {
-                if (OldPosition.getY()- NewPosition.getY()==1) {
-                    return true;
-                }
-
-                else{
-                    return false;
-                }
-            }
+            return DrawArray[_y][_x] == "X";
+        } else if (_nextGamer == "Spieler 2") {
+            return DrawArray[_y][_x] == "O";
         }
         return false;
     }
