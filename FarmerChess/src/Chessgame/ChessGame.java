@@ -54,12 +54,15 @@ public class ChessGame implements IGame {
             }
 
             if (FirstTurnConfirmed) {
-                WhiteFarmers.get(OldPosition.getX()-1).getPosition().setY(WhiteFarmers.get(OldPosition.getX()-1).getPosition().getY() + 2);
-            } else {
-                WhiteFarmers.get(OldPosition.getX()-1).getPosition().setY(WhiteFarmers.get(OldPosition.getX()-1).getPosition().getY() + 1);
+                WhiteFarmers.get(GetIndexFromWhiteFarmer(OldPosition)).getPosition().setY(WhiteFarmers.get(GetIndexFromWhiteFarmer(OldPosition)).getPosition().getY() + 2);
+            } else if (PlayerCanKillOther(NewPosition)) {
+                WhiteFarmers.get(GetIndexFromWhiteFarmer(OldPosition)).getPosition().setY(WhiteFarmers.get(GetIndexFromWhiteFarmer(OldPosition)).getPosition().getY() + 1);
+            }
+            else {
+                WhiteFarmers.get(GetIndexFromWhiteFarmer(OldPosition)).getPosition().setY(WhiteFarmers.get(GetIndexFromWhiteFarmer(OldPosition)).getPosition().getY() + 1);
             }
             System.out.println("Zug ausgeführt");
-            //DrawChessBoard();
+
         }
 
         else {
@@ -67,14 +70,19 @@ public class ChessGame implements IGame {
 
             if (firstTurn == true&& OldPosition.getY() - NewPosition.getY() == 2) {
                 FirstTurnConfirmed=true;
-            } else {
+            }
+            else if (PlayerCanKillOther(NewPosition)) {
+
+            }
+            else
+            {
                 FirstTurnConfirmed = false;
             }
 
             if (FirstTurnConfirmed) {
-                BlackFramers.get(OldPosition.getX()-1).getPosition().setY(BlackFramers.get(OldPosition.getX()-1).getPosition().getY() - 2);
+                BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().setY(BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().getY() - 2);
             } else {
-                BlackFramers.get(OldPosition.getX()-1).getPosition().setY(BlackFramers.get(OldPosition.getX()-1).getPosition().getY() - 1);
+                BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().setY(BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().getY() - 1);
             }
             System.out.println("Zug ausgeführt");
             //DrawChessBoard();
@@ -233,6 +241,54 @@ public class ChessGame implements IGame {
             System.out.println();
         }
         return initArray(BlackFramers,WhiteFarmers);
+    }
+
+
+    public boolean PlayerCanKillOther(Position _newPosition){
+        if (PlayerOneOnTurn){
+            for (BlackFarmer Farmer:
+                 BlackFramers) {
+               if (_newPosition.getY()==Farmer.getPosition().getY()&&(_newPosition.getX()-Farmer.getPosition().getX()==-1||_newPosition.getX()-Farmer.getPosition().getX()==1)){
+                   return  true;
+               }
+            }
+        }
+
+        else {
+            for (WhiteFarmer Farmer :
+                    WhiteFarmers) {
+                if (_newPosition.getY()==Farmer.getPosition().getY()&&(_newPosition.getX()-Farmer.getPosition().getX()==-1||_newPosition.getX()-Farmer.getPosition().getX()==1)){
+                    return  true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private int GetIndexFromBlackFarmer(Position _oldPosition)
+    {
+        int returnValue=100;
+
+        for (int i = 0; i<BlackFramers.toArray().length;i++ ){
+
+            if (BlackFramers.get(i).getPosition().getY()== _oldPosition.getY()-1&&BlackFramers.get(i).getPosition().getX()== _oldPosition.getX()-1){
+                returnValue=i;
+            }
+        }
+        return returnValue;
+    }
+
+    private int GetIndexFromWhiteFarmer(Position _oldPosition)
+    {
+        int returnValue=100;
+
+        for (int i = 0; i<WhiteFarmers.toArray().length;i++ ){
+
+            if (WhiteFarmers.get(i).getPosition().getY()== _oldPosition.getY()-1&&WhiteFarmers.get(i).getPosition().getX()== _oldPosition.getX()-1){
+                returnValue=i;
+            }
+        }
+        return returnValue;
     }
 
 

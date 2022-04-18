@@ -85,12 +85,6 @@ public class ChessField extends JPanel {
 
                     if (PositionTurn != null && PositionFromChessFigure != null) {
 
-                        //CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY());
-                        //boolean b = TurnIsValid(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()), game.GetFirstTurn(), game.NextGamer());
-                        //System.out.println("turn is valid: " + b);
-                        //b=CheckIfOnOldPositionFigure(CalcColumn(PositionFromChessFigure.getX())-1, CalcRow(PositionFromChessFigure.getY())-1, game.NextGamer());
-                        //System.out.println("Is figure on Position " + b);
-
                         if (TurnIsValid(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()), game.GetFirstTurn(), game.NextGamer()) == false
                                 && CheckIfOnOldPositionFigure(CalcColumn(PositionFromChessFigure.getX()) - 1, CalcRow(PositionFromChessFigure.getY()) - 1, game.NextGamer()) == false) {
                             JOptionPane.showMessageDialog(null, "Schachzug nicht valide", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
@@ -156,17 +150,12 @@ public class ChessField extends JPanel {
 
     private boolean CheckIfOnOldPositionFigure(int _x, int _y, String _nextGamer) {
         if (_nextGamer == "Spieler 1") {
-            //_x=-7;
-            //_x=Math.abs(_x);
-
-
             return DrawArray[_y][_x] == "X";
         } else if (_nextGamer == "Spieler 2") {
             return DrawArray[_y][_x] == "O";
         }
         return false;
     }
-
 
     private void ReDrawChessBoard(){
         this.repaint();
