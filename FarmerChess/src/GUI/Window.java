@@ -22,7 +22,7 @@ public class Window extends JFrame{
         this.setResizable(false);
 
         game=new ChessGame();
-        PlayField=new ChessField(game.DrawChessBoard());
+        PlayField=new ChessField(game.DrawChessBoard(),game);
         this.add(PlayField,BorderLayout.SOUTH);
         initGUI_Elements();
         //initMouseActions();
@@ -63,10 +63,10 @@ public class Window extends JFrame{
 
                     System.out.println(e.getX() + "," + e.getY());
                     System.out.println("---is in playfield--");
-                    int[][]paylerturn=CalcPlayerturn(e.getX(),e.getY(),PlayField.GetSquarelength());
+                    //int[][]paylerturn=CalcPlayerturn(e.getX(),e.getY(),PlayField.GetSquarelength());
                     //game.Move();
 
-                    ChessFieldAfterTurn();
+                   // ChessFieldAfterTurn();
                 }
             }
         });

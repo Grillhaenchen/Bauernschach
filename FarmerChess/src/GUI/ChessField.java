@@ -1,5 +1,8 @@
 package GUI;
 
+import Chessgame.IGame;
+import Infrastructure.Position;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -13,10 +16,10 @@ public class ChessField extends JPanel {
     private int WidthOfFrame = 0;
     private int Squarelength = 0;
 
-    public ChessField(String[][] _DrawArray) {
+    public ChessField(String[][] _DrawArray, IGame game) {
         super();
         DrawArray = _DrawArray;
-        initMouseActions();
+        initMouseActions(game);
     }
 
     @Override
@@ -60,25 +63,63 @@ public class ChessField extends JPanel {
         g2d.dispose();
     }
 
+    private Position PositionFromChessFigure;
+    private Position PositionTurn;
 
-    private void initMouseActions() {
+    private void initMouseActions(IGame game) {
         this.addMouseListener(new MouseAdapter() {
             @Override //I override only one method for presentation
             public void mousePressed(MouseEvent e) {
 
                 if ((HeightOfFrame / 2) - ((SQUARESIZE * Squarelength) / 2) < e.getY() && (HeightOfFrame / 2) + ((SQUARESIZE * Squarelength) / 2) > e.getY() &&(WidthOfFrame / 2) - ((SQUARESIZE * Squarelength) / 2) < e.getX() && (WidthOfFrame / 2) + ((SQUARESIZE * Squarelength) / 2) > e.getX()) {
                     System.out.println(e.getY() + " is in ChessField");
+                    if (PositionFromChessFigure==null){
+                        PositionFromChessFigure=new Position(e.getX(),e.getY());
+                    }
+                    else {
+                        PositionTurn=new Position(e.getX(),e.getY());
+                    }
+
+                    if (PositionTurn!=null&&PositionFromChessFigure!=null){
+                        //CalcPlayerturn(PositionFromChessFigure.getX(),PositionTurn.getX(),PositionFromChessFigure.getY(),PositionTurn.getY());
+
+                       // game.Move();
+                    }
+                    CalcPlayerturn(e.getX(),PositionTurn.getX(),e.getY(),PositionTurn.getY());
                 }
-
-                /*if ((HeightOfFrame/2)+((SQUARESIZE*Squarelength)/2)>e.getY()){
-                    System.out.println(e.getY()+" is in ChessField lower");
-                }
-*/
-                System.out.println(/*e.getX() + "," +*/ e.getY());
-
-
             }
         });
     }
+    private int[][] CalcPlayerturn(int _currentX, int _turnX, int _currentY,int _turnY){
+
+        int [][]Turn=new int[2][2];
+
+        //Turn[0][0]=CalcColumn(_currentX);//old column
+        //Turn[0][0]=CalcRow(_currentY);//old row
+
+        System.out.println("Current Column: "+CalcColumn(_currentX));
+        System.out.println("Current Row: "+CalcRow(_currentY));
+
+
+
+
+        return null;
+    }
+
+    private int CalcColumn(int _X){
+
+        double offset=(WidthOfFrame / 2) - ((SQUARESIZE * Squarelength) / 2);
+        return (int)Math.ceil((_X-offset)/Squarelength);
+    }
+
+    private int CalcRow(int _Y){
+        double offset=(HeightOfFrame / 2) - ((SQUARESIZE * Squarelength) / 2);
+
+
+        return (int)Math.ceil((_Y-offset)/Squarelength);
+    }
+
+
+
 
 }
