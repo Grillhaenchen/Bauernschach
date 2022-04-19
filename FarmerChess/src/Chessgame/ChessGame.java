@@ -187,27 +187,23 @@ public class ChessGame implements IGame {
         //Fill PLayField with blackFarmer
         for (BlackFarmer Farmer:
              BlackFramers) {
-            try {
 
-                DrawArray[Farmer.getPosition().getY()][Farmer.getPosition().getX()]="O";
-            }
-            catch (NullPointerException e){
+                if (Farmer.getPosition().getY()!=-1&&Farmer.getPosition().getX()!=-1){
+                    DrawArray[Farmer.getPosition().getY()][Farmer.getPosition().getX()]="O";
+                }
 
-            }
+
 
         }
 
         //Fill PLayField with WhiteFarmer
         for (WhiteFarmer Farmer:
                 WhiteFarmers) {
-            try {
+                if (Farmer.getPosition().getY()!=-1&&Farmer.getPosition().getX()!=-1)
+                {
+                    DrawArray[Farmer.getPosition().getY()][Farmer.getPosition().getX()]="X";
+                }
 
-
-                DrawArray[Farmer.getPosition().getY()][Farmer.getPosition().getX()]="X";
-            }
-            catch (NullPointerException e){
-
-            }
         }
 
         return DrawArray;
