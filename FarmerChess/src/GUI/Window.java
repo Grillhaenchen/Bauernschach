@@ -53,13 +53,47 @@ public class Window extends JFrame {
         buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         JButton NewGame = new JButton("New Game");
         buttonPanel.add(NewGame);
+        NewGame.addActionListener(e -> initGame());
         return buttonPanel;
     }
 
     private void initGUI_Elements() {
         PlayerInTurn = new JLabel();
         PlayerInTurn.setText("Spieler an der Reihe: " + game.NextGamer());
+    }
 
+    private void initGame(){
+        this.setVisible(false);
+        this.remove(PlayField);
+        this.remove(PlayerInTurn);
+        this.remove(CreateButtons());
+
+        game = new ChessGame();
+        PlayField = new ChessField(game.DrawChessBoard(), game);
+        this.add(PlayField, BorderLayout.SOUTH);
+        initGUI_Elements();
+        this.add(CreateButtons(), BorderLayout.EAST);
+        this.add(PlayerInTurn, BorderLayout.WEST);
+        this.pack();
+        this.setVisible(true);
+
+        PlayField.SetHeightAndWidth(PlayField.getHeight(), PlayField.getWidth());
+        PlayField.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+
+                PlayerInTurn.setText("Spieler an der Reihe: " + game.NextGamer());
+
+            }
+        });
+        this.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+
+                PlayerInTurn.setText("Spieler an der Reihe: " + game.NextGamer());
+
+            }
+        });
 
     }
 
