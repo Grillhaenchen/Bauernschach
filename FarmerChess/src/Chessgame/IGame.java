@@ -8,7 +8,7 @@ public interface IGame {
     void newGame();
     String[][] Move(int[][] _FígureTurn);
     String[][] Move();
-    String GetWinner();
+    //String GetWinner();
     String GameOver();
     String NextGamer();
 

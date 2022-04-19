@@ -20,14 +20,6 @@ public class ChessGame implements IGame {
         DrawChessBoard();
         PlayerOneOnTurn = true;
         firstTurn = true;
-
-    }
-
-    private void Start() {
-        while (true)
-        {
-            Move();
-        }
     }
 
     public void newGame() {
@@ -270,6 +262,11 @@ public class ChessGame implements IGame {
     }
 
     public String GameOver() {
+
+        if (SearchWinner()!=null){
+            return SearchWinner();
+        }
+
         return null;
     }
 
@@ -374,4 +371,25 @@ public class ChessGame implements IGame {
         return returnValue;
     }
 
+    private String SearchWinner(){
+
+        for (BlackFarmer Farmer :
+                BlackFramers)
+        {
+            if (Farmer.getPosition().getY() == 0)
+            {
+                return "Spieler 2 hat gewonnen";
+            }
+        }
+
+        for (WhiteFarmer Farmer :
+                WhiteFarmers)
+        {
+            if (Farmer.getPosition().getY() == 7)
+            {
+                return "Spieler 1 hat gewonnen";
+            }
+        }
+        return null;
+    }
 }

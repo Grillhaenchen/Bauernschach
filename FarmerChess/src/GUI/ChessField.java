@@ -49,11 +49,13 @@ public class ChessField extends JPanel {
         int height = getHeight() - (Squarelength * 2);
 
         int y = (getHeight() - (Squarelength * SQUARESIZE)) / 2;
-        for (int horz = 0; horz < 8; horz++) {
+        for (int horz = 0; horz < 8; horz++)
+        {
 
             int x = (getWidth() - (Squarelength * SQUARESIZE)) / 2;
 
-            for (int vert = 0; vert < SQUARESIZE; vert++) {
+            for (int vert = 0; vert < SQUARESIZE; vert++)
+            {
                 g.drawRect(x, y, Squarelength, Squarelength);
                 g.drawString(DrawArray[horz][vert], x + 10, y + 18);
 
@@ -70,7 +72,8 @@ public class ChessField extends JPanel {
             @Override //I override only one method for presentation
             public void mousePressed(MouseEvent e) {
 
-                if ((HeightOfFrame / 2) - ((SQUARESIZE * Squarelength) / 2) < e.getY() && (HeightOfFrame / 2) + ((SQUARESIZE * Squarelength) / 2) > e.getY() && (WidthOfFrame / 2) - ((SQUARESIZE * Squarelength) / 2) < e.getX() && (WidthOfFrame / 2) + ((SQUARESIZE * Squarelength) / 2) > e.getX()) {
+                if ((HeightOfFrame / 2) - ((SQUARESIZE * Squarelength) / 2) < e.getY() && (HeightOfFrame / 2) + ((SQUARESIZE * Squarelength) / 2) > e.getY() && (WidthOfFrame / 2) - ((SQUARESIZE * Squarelength) / 2) < e.getX() && (WidthOfFrame / 2) + ((SQUARESIZE * Squarelength) / 2) > e.getX())
+                {
 
                     System.out.println("##############################");
                     System.out.println("Spalte: " + CalcColumn(e.getX()));
@@ -78,37 +81,49 @@ public class ChessField extends JPanel {
                     System.out.println("##############################");
 
 
-
-                    if (PositionFromChessFigure == null) {
+                    if (PositionFromChessFigure == null)
+                    {
                         PositionFromChessFigure = new Position(e.getX(), e.getY());
 
-                    } else {
+                    }
+                    else
+                    {
                         PositionTurn = new Position(e.getX(), e.getY());
                     }
 
-                    Position tmpPosition=new Position(CalcColumn(PositionFromChessFigure.getX()),CalcRow(PositionFromChessFigure.getY()));
+                    Position tmpPosition = new Position(CalcColumn(PositionFromChessFigure.getX()), CalcRow(PositionFromChessFigure.getY()));
 
-                    if (PositionTurn != null && PositionFromChessFigure != null) {
-                        if (!TurnIsValid(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()), game.GetFirstTurn(), game.NextGamer())
-                                && !CheckIfOnOldPositionFigure(CalcColumn(PositionFromChessFigure.getX()) - 1, CalcRow(PositionFromChessFigure.getY()) - 1, game.NextGamer())) {
+                    if (PositionTurn != null && PositionFromChessFigure != null)
+                    {
+                        if (!TurnIsValid(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()), game.GetFirstTurn(), game.NextGamer()) && !CheckIfOnOldPositionFigure(CalcColumn(PositionFromChessFigure.getX()) - 1, CalcRow(PositionFromChessFigure.getY()) - 1, game.NextGamer()))
+                        {
                             JOptionPane.showMessageDialog(null, "Schachzug nicht valide", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
-                            PositionFromChessFigure=null;
-                            PositionTurn=null;
-                        } else if (game.PlayerCanKillOther(tmpPosition)) {
-                            DrawArray= game.Move(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()));
-                            PositionFromChessFigure=null;
-                            PositionTurn=null;
+                            PositionFromChessFigure = null;
+                            PositionTurn = null;
+                        }
+                        else if (game.PlayerCanKillOther(tmpPosition))
+                        {
+                            DrawArray = game.Move(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()));
+                            PositionFromChessFigure = null;
+                            PositionTurn = null;
                             //JOptionPane.showMessageDialog(null, "Schachzug ausgeführt", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
                             ReDrawChessBoard();
-                        } else {
-                            DrawArray= game.Move(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()));
-                            PositionFromChessFigure=null;
-                            PositionTurn=null;
-                           // JOptionPane.showMessageDialog(null, "Schachzug ausgeführt", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                        else
+                        {
+                            DrawArray = game.Move(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()));
+                            PositionFromChessFigure = null;
+                            PositionTurn = null;
+                            // JOptionPane.showMessageDialog(null, "Schachzug ausgeführt", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
                             ReDrawChessBoard();
                         }
                     }
                 }
+
+                if (game.GameOver()!=null){
+                    JOptionPane.showMessageDialog(null, game.GameOver(), "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
+                }
+
             }
         });
     }
@@ -139,18 +154,27 @@ public class ChessField extends JPanel {
         Position OldPosition = new Position(_turnArray[0][0], _turnArray[0][1]);
         Position NewPosition = new Position(_turnArray[1][0], _turnArray[1][1]);
 
-        if (_nextGamer == "Spieler 1") {
+        if (_nextGamer == "Spieler 1")
+        {
             System.out.println("Spieler 1: " + (OldPosition.getY() - NewPosition.getY()));
-            if (_firstTurn == true) {
+            if (_firstTurn == true)
+            {
                 return OldPosition.getY() - NewPosition.getY() <= 2;
-            } else {
+            }
+            else
+            {
                 return OldPosition.getY() - NewPosition.getY() == 1;
             }
-        } else if (_nextGamer == "Spieler 2") {
-            if (_firstTurn == true) {
+        }
+        else if (_nextGamer == "Spieler 2")
+        {
+            if (_firstTurn == true)
+            {
                 System.out.println("Spieler 2 " + (OldPosition.getY() - NewPosition.getY()));
                 return OldPosition.getY() - NewPosition.getY() <= 2;
-            } else {
+            }
+            else
+            {
                 return OldPosition.getY() - NewPosition.getY() == 1;
             }
         }
@@ -158,15 +182,18 @@ public class ChessField extends JPanel {
     }
 
     private boolean CheckIfOnOldPositionFigure(int _x, int _y, String _nextGamer) {
-        if (_nextGamer == "Spieler 1") {
+        if (_nextGamer == "Spieler 1")
+        {
             return DrawArray[_y][_x] == "X";
-        } else if (_nextGamer == "Spieler 2") {
+        }
+        else if (_nextGamer == "Spieler 2")
+        {
             return DrawArray[_y][_x] == "O";
         }
         return false;
     }
 
-    private void ReDrawChessBoard(){
+    private void ReDrawChessBoard() {
         this.repaint();
     }
 
