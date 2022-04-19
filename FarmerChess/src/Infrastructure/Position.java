@@ -1,13 +1,13 @@
 package Infrastructure;
 
 public class Position {
-    public Position(int _x,int _y){
-        X=_x;
-        Y=_y;
-    }
-
     private int X;
     private int Y;
+
+    public Position(int _x, int _y) {
+        X = _x;
+        Y = _y;
+    }
 
     public int getX() {
         return X;
