@@ -148,7 +148,7 @@ public class ChessGame implements IGame {
         String[][] DrawArray = new String[8][8];
 
 
-        for (int i = 0; i < 8; i++) {
+       /* for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 try {
 
@@ -173,7 +173,43 @@ public class ChessGame implements IGame {
                 }
 
             }
+        }*/
+
+        //Draw Empty PlayField
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+
+                        System.out.print(" # ");
+                        DrawArray[j][i] = " ";
+            }
         }
+
+        //Fill PLayField with blackFarmer
+        for (BlackFarmer Farmer:
+             BlackFramers) {
+            try {
+
+                DrawArray[Farmer.getPosition().getY()][Farmer.getPosition().getX()]="O";
+            }
+            catch (NullPointerException e){
+
+            }
+
+        }
+
+        //Fill PLayField with WhiteFarmer
+        for (WhiteFarmer Farmer:
+                WhiteFarmers) {
+            try {
+
+
+                DrawArray[Farmer.getPosition().getY()][Farmer.getPosition().getX()]="X";
+            }
+            catch (NullPointerException e){
+
+            }
+        }
+
         return DrawArray;
     }
 
