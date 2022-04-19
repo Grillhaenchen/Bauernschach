@@ -95,7 +95,11 @@ public class ChessField extends JPanel {
 
                     if (PositionTurn != null && PositionFromChessFigure != null)
                     {
-                        if (!TurnIsValid(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()), game.GetFirstTurn(), game.NextGamer()) && !CheckIfOnOldPositionFigure(CalcColumn(PositionFromChessFigure.getX()) - 1, CalcRow(PositionFromChessFigure.getY()) - 1, game.NextGamer()))
+                        boolean b=TurnIsValid(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()), game.GetFirstTurn(), game.NextGamer());
+                        boolean c=CheckIfOnOldPositionFigure(CalcColumn(PositionFromChessFigure.getX()) - 1, CalcRow(PositionFromChessFigure.getY()) - 1, game.NextGamer(),PositionTurn);
+
+
+                        if (!TurnIsValid(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()), game.GetFirstTurn(), game.NextGamer()) && !CheckIfOnOldPositionFigure(CalcColumn(PositionFromChessFigure.getX()) - 1, CalcRow(PositionFromChessFigure.getY()) - 1, game.NextGamer(),PositionTurn))
                         {
                             JOptionPane.showMessageDialog(null, "Schachzug nicht valide", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
                             PositionFromChessFigure = null;
@@ -164,6 +168,10 @@ public class ChessField extends JPanel {
             }
             else
             {
+                //if (DrawArray[NewPosition.getY()-1][NewPosition.getX()-1]=="O"){
+                //    return false;
+                //}
+
                 return OldPosition.getY() - NewPosition.getY() == 1;
             }
         }
@@ -176,19 +184,28 @@ public class ChessField extends JPanel {
             }
             else
             {
+                //if (DrawArray[NewPosition.getY()-1][NewPosition.getX()-1]=="X"){
+                //    return false;
+                //}
                 return OldPosition.getY() - NewPosition.getY() == 1;
             }
         }
         return false;
     }
 
-    private boolean CheckIfOnOldPositionFigure(int _x, int _y, String _nextGamer) {
+    private boolean CheckIfOnOldPositionFigure(int _x, int _y, String _nextGamer,Position _newPosition) {
         if (_nextGamer == "Spieler 1")
         {
+            if (DrawArray[CalcRow(_newPosition.getY())  -1][CalcColumn(_newPosition.getX()) -1]=="O"){
+                return false;
+            }
             return DrawArray[_y][_x] == "X";
         }
         else if (_nextGamer == "Spieler 2")
         {
+            if (DrawArray[CalcRow(_newPosition.getY())  -1][CalcColumn(_newPosition.getX()) -1]=="X"){
+                return false;
+            }
             return DrawArray[_y][_x] == "O";
         }
         return false;
