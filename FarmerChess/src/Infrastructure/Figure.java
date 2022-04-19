@@ -1,13 +1,12 @@
 package Infrastructure;
 
 public abstract class Figure {
-    public Figure(int X,int Y){
-        position=new Position(X,Y);
-    }
-
     protected FigureColor Color;
-
     protected Position position;
+
+    public Figure(int X, int Y) {
+        position = new Position(X, Y);
+    }
 
     public Position getPosition() {
         return position;

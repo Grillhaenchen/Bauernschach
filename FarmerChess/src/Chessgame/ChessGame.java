@@ -47,7 +47,7 @@ public class ChessGame implements IGame {
             {
                 WhiteFarmers.get(GetIndexFromWhiteFarmer(OldPosition)).getPosition().setY(WhiteFarmers.get(GetIndexFromWhiteFarmer(OldPosition)).getPosition().getY() + 2);
             }
-            else if (PlayerCanKillOther(NewPosition))
+            else if (PlayerCanKillOther(NewPosition) && OldPosition.getX() != NewPosition.getX())
             {
                 int i = GetIndexFromWhiteFarmer(OldPosition);
 
@@ -66,11 +66,12 @@ public class ChessGame implements IGame {
         {
             FirstTurnConfirmed = firstTurn == true && OldPosition.getY() - NewPosition.getY() == 2;
 
+
             if (FirstTurnConfirmed)
             {
                 BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().setY(BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().getY() - 2);
             }
-            else if (PlayerCanKillOther(NewPosition))
+            else if (PlayerCanKillOther(NewPosition) && OldPosition.getX() != NewPosition.getX())
             {
                 int i = GetIndexFromBlackFarmer(OldPosition);
 
@@ -263,7 +264,8 @@ public class ChessGame implements IGame {
 
     public String GameOver() {
 
-        if (SearchWinner()!=null){
+        if (SearchWinner() != null)
+        {
             return SearchWinner();
         }
 
@@ -371,7 +373,7 @@ public class ChessGame implements IGame {
         return returnValue;
     }
 
-    private String SearchWinner(){
+    private String SearchWinner() {
 
         for (BlackFarmer Farmer :
                 BlackFramers)

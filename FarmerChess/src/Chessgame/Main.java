@@ -2,9 +2,6 @@ package Chessgame;
 
 import GUI.Window;
 
-import javax.swing.*;
-import java.awt.*;
-
 public class Main {
 
 
@@ -14,9 +11,8 @@ public class Main {
         win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         win.setPreferredSize(new Dimension(400,300));
         win.setVisible(true);*/
-        Window win =new Window();
-        IGame game =new ChessGame();
-
+        Window win = new Window();
+        IGame game = new ChessGame();
 
 
     }

@@ -101,7 +101,7 @@ public class ChessField extends JPanel {
                             PositionFromChessFigure = null;
                             PositionTurn = null;
                         }
-                        else if (game.PlayerCanKillOther(tmpPosition))
+                        else if (game.PlayerCanKillOther(tmpPosition) && CalcColumn(PositionFromChessFigure.getX()) != tmpPosition.getX())
                         {
                             DrawArray = game.Move(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()));
                             PositionFromChessFigure = null;
@@ -120,7 +120,8 @@ public class ChessField extends JPanel {
                     }
                 }
 
-                if (game.GameOver()!=null){
+                if (game.GameOver() != null)
+                {
                     JOptionPane.showMessageDialog(null, game.GameOver(), "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
                 }
 
