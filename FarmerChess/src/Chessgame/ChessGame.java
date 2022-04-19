@@ -40,8 +40,8 @@ public class ChessGame implements IGame {
         //_FígureTurn[1][0]  <--new column
         //_FígureTurn[1][1]  <--new row
 
-        Position OldPosition = new Position(_FígureTurn[0][0], _FígureTurn[0][1]);
-        Position NewPosition = new Position(_FígureTurn[1][0], _FígureTurn[1][1]);
+        Position OldPosition = new Position(_FígureTurn[0][0]-1, _FígureTurn[0][1]-1);
+        Position NewPosition = new Position(_FígureTurn[1][0]-1, _FígureTurn[1][1]-1);
 
         FirstTurnConfirmed = false;
 
@@ -66,9 +66,11 @@ public class ChessGame implements IGame {
             if (FirstTurnConfirmed) {
                 BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().setY(BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().getY() - 2);
             } else if (PlayerCanKillOther(NewPosition)) {
-                BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition(). setY(BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().getY() -1);
-                BlackFramers.get(GetIndexFromWhiteFarmer(OldPosition)).getPosition().setX(NewPosition.getX());
-                WhiteFarmers.set(GetIndexFromWhiteFarmer(NewPosition), null);
+                int i=GetIndexFromBlackFarmer(OldPosition);
+
+                BlackFramers.get(i).getPosition().setY(BlackFramers.get(i).getPosition().getY() -1);
+                BlackFramers.get(i).getPosition().setX(NewPosition.getX());
+                WhiteFarmers.get(GetIndexFromWhiteFarmer(NewPosition)).setPosition(new Position(-1,-1));
             } else {
                 BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().setY(BlackFramers.get(GetIndexFromBlackFarmer(OldPosition)).getPosition().getY() - 1);
             }
@@ -148,16 +150,28 @@ public class ChessGame implements IGame {
 
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (WhiteFarmers.get(j).getPosition().getX() == j && WhiteFarmers.get(j).getPosition().getY() == i) {
-                    System.out.print(" X ");
-                    DrawArray[i][j] = "X";
-                } else if (BlackFramers.get(j).getPosition().getX() == j && BlackFramers.get(j).getPosition().getY() == i) {
-                    System.out.print(" O ");
-                    DrawArray[i][j] = "O";
-                } else {
+                try {
+
+                    if (j==0&&i==3){
+                        System.out.println("sdf");
+                    }
+                    if (WhiteFarmers.get(i).getPosition().getX() == i && WhiteFarmers.get(i).getPosition().getY() == j) {
+                        System.out.print(" X ");
+                        DrawArray[j][i] = "X";
+                    }
+                    else if (BlackFramers.get(i).getPosition().getX() == i && BlackFramers.get(i).getPosition().getY() == j) {
+                        System.out.print(" O ");
+                        DrawArray[j][i] = "O";
+                    }
+                    else {
+                        System.out.print(" # ");
+                        DrawArray[j][i] = " ";
+                    }
+                }catch (NullPointerException e){
                     System.out.print(" # ");
-                    DrawArray[i][j] = " ";
+                    DrawArray[j][i] = " ";
                 }
+
             }
         }
         return DrawArray;
@@ -250,7 +264,7 @@ public class ChessGame implements IGame {
 
         for (int i = 0; i < BlackFramers.toArray().length; i++) {
 
-            if (BlackFramers.get(i).getPosition().getY() == _oldPosition.getY()-1  && BlackFramers.get(i).getPosition().getX() == _oldPosition.getX()-1 ) {
+            if (BlackFramers.get(i).getPosition().getY() == _oldPosition.getY() && BlackFramers.get(i).getPosition().getX() == _oldPosition.getX()) {
                 returnValue = i;
             }
         }
@@ -262,7 +276,7 @@ public class ChessGame implements IGame {
 
         for (int i = 0; i < WhiteFarmers.toArray().length; i++) {
 
-            if (WhiteFarmers.get(i).getPosition().getY() == _oldPosition.getY() - 1 && WhiteFarmers.get(i).getPosition().getX() == _oldPosition.getX() - 1) {
+            if (WhiteFarmers.get(i).getPosition().getY() == _oldPosition.getY() && WhiteFarmers.get(i).getPosition().getX() == _oldPosition.getX()) {
                 returnValue = i;
             }
         }

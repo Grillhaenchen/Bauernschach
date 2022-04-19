@@ -77,11 +77,16 @@ public class ChessField extends JPanel {
                     System.out.println("Zeile: " + CalcRow(e.getY()));
                     System.out.println("##############################");
 
+
+
                     if (PositionFromChessFigure == null) {
                         PositionFromChessFigure = new Position(e.getX(), e.getY());
+
                     } else {
                         PositionTurn = new Position(e.getX(), e.getY());
                     }
+
+                    Position tmpPosition=new Position(CalcColumn(PositionFromChessFigure.getX()),CalcRow(PositionFromChessFigure.getY()));
 
                     if (PositionTurn != null && PositionFromChessFigure != null) {
                         if (!TurnIsValid(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()), game.GetFirstTurn(), game.NextGamer())
@@ -89,7 +94,7 @@ public class ChessField extends JPanel {
                             JOptionPane.showMessageDialog(null, "Schachzug nicht valide", "InfoBox: ", JOptionPane.INFORMATION_MESSAGE);
                             PositionFromChessFigure=null;
                             PositionTurn=null;
-                        } else if (game.PlayerCanKillOther(PositionTurn)) {
+                        } else if (game.PlayerCanKillOther(tmpPosition)) {
                             DrawArray= game.Move(CalcPlayerturn(PositionFromChessFigure.getX(), PositionTurn.getX(), PositionFromChessFigure.getY(), PositionTurn.getY()));
                             PositionFromChessFigure=null;
                             PositionTurn=null;
